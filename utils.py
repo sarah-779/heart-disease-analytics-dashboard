@@ -17,9 +17,7 @@ def generate_insights(df):
     if df["chol"].mean() > 200:
         insights.append("Average cholesterol level is high.")
 
-    if df[df["target"] == 1]["age"].mean() > 55:
-        insights.append("Older age group is more affected by heart disease.")
-
+    
     insights.append("Exercise and lifestyle strongly impact heart health.")
 
     return insights
