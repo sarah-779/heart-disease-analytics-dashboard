@@ -7,7 +7,7 @@ from utils import load_data, generate_insights
 st.set_page_config(page_title="Heart Disease Dashboard", layout="wide")
 
 # Load data
-df = load_data("heart.csv")
+df = load_data("./heart.csv")
 
 st.title("❤️ Heart Disease Analytics Dashboard")
 st.markdown("Interactive data analysis and insights for heart health dataset")
