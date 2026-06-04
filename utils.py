@@ -1,13 +1,24 @@
 import pandas as pd
 
-# Load dataset
+# Load dataset safely
 def load_data(path):
     df = pd.read_csv(path)
-    df.columns = df.columns.str.strip()
+
+    # Clean column names
+    df.columns = df.columns.str.strip().str.lower()
+
+    # Convert important columns to numeric
+    for col in ["age", "chol", "target"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # Drop missing values
+    df = df.dropna(subset=["age", "chol", "target"])
+
     return df
 
 
-# Generate simple insights
+# Generate insights
 def generate_insights(df):
     insights = []
 
@@ -17,7 +28,9 @@ def generate_insights(df):
     if df["chol"].mean() > 200:
         insights.append("Average cholesterol level is high.")
 
-    
-    insights.append("Exercise and lifestyle strongly impact heart health.")
+    if df[df["target"] == 1]["age"].mean() > 55:
+        insights.append("Older age group is more affected by heart disease.")
+
+    insights.append("Exercise, diet, and lifestyle strongly impact heart health.")
 
     return insights
